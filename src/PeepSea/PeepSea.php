@@ -1,5 +1,6 @@
 <?php
 
+namespace PeepSea;
 
 class PeepSea
 {
@@ -49,7 +50,13 @@ class PeepSea
      */
     public function correctGuess(): ?Guess
     {
-        // TODO: loop guesses and pick one where $guess->text() === $this->answer()
+        foreach ($this->guesses() as $guess) {
+            /** @var Guess $guess */
+            if ($guess->text() === $this->answer()) {
+                return $guess;
+            }
+        }
+
         return null;
     }
 

@@ -1,5 +1,11 @@
 <?php
 
+namespace PeepSea;
+
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use Traversable;
 
 class Images implements IteratorAggregate, Countable
 {
@@ -8,8 +14,9 @@ class Images implements IteratorAggregate, Countable
     /**
      * Images constructor.
      * @param array $images
+     * @throws ImagesCreationException
      */
-    private function __construct(array $images)
+    public function __construct(array $images)
     {
         foreach ($images as $image) {
             if (!is_a($image, Image::class)) {
@@ -18,7 +25,7 @@ class Images implements IteratorAggregate, Countable
                 );
             }
 
-            $this->images[] = $image
+            $this->images[] = $image;
         }
     }
 

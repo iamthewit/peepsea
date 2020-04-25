@@ -1,5 +1,11 @@
 <?php
 
+namespace PeepSea;
+
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use Traversable;
 
 class Guesses implements IteratorAggregate, Countable
 {
@@ -8,17 +14,18 @@ class Guesses implements IteratorAggregate, Countable
     /**
      * Images constructor.
      * @param array $guesses
+     * @throws GuessesCreationException
      */
-    private function __construct(array $guesses)
+    public function __construct(array $guesses)
     {
         foreach ($guesses as $guess) {
-            if (!is_a($guess, Image::class)) {
+            if (!is_a($guess, Guess::class)) {
                 throw new GuessesCreationException(
                     'Can only create a Guesses object from an array of Guess objects.'
                 );
             }
 
-            $this->guesses[] = $guess
+            $this->guesses[] = $guess;
         }
     }
 
