@@ -2,7 +2,11 @@
     "name": "iamthewit/peepsea",
     "autoload": {
         "psr-4": {
-            "PeepSea\\": "src/PeepSea/"
+            "Application\\": "src/Application",
+            "Entity\\": "src/Entity",
+            "Factory\\": "src/Factory",
+            "PeepSea\\": "src/PeepSea/",
+            "Repository\\": "src/Repository"
         }
     },
     "require": {},
