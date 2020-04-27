@@ -9,7 +9,11 @@
             "Repository\\": "src/Repository"
         }
     },
-    "require": {},
+    "require": {
+        "ramsey/uuid": "^4.0",
+        "ext-pdo": "*",
+        "ext-json": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.1",
         "kint-php/kint": "^3.3"

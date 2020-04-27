@@ -4,15 +4,33 @@ namespace Entity;
 
 class PeepSeaEntity
 {
+    private string $id;
     private string $answer;
     private array $images;
     private array $guesses;
 
-    public function __construct(string $answer, array $images, array $guesses)
+    public function __construct(string $id, string $answer, array $images, array $guesses)
     {
+        $this->id = $id;
         $this->answer = $answer;
         $this->images = $images;
         $this->guesses = $guesses;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
     }
 
     /**

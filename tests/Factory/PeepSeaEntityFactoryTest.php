@@ -9,6 +9,7 @@ use PeepSea\Image;
 use PeepSea\Images;
 use PeepSea\PeepSea;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 
 class PeepSeaEntityFactoryTest extends TestCase
 {
@@ -16,6 +17,7 @@ class PeepSeaEntityFactoryTest extends TestCase
     public function testBuildEntityFromDatabaseRow()
     {
         $peepSeaEntity = PeepSeaEntityFactory::buildEntityFromDatabaseRow([
+            'id' => Uuid::uuid4(),
            'answer' => 'Answer Text',
            'images' => 'image1.png,image2.png,image3.png',
            'guesses' => json_encode([
@@ -25,7 +27,7 @@ class PeepSeaEntityFactoryTest extends TestCase
                ]
            ])
         ]);
-        
+
         $this->assertInstanceOf(PeepSeaEntity::class, $peepSeaEntity);
         $this->assertEquals('Answer Text', $peepSeaEntity->getAnswer());
         $this->assertEquals(['image1.png', 'image2.png', 'image3.png'], $peepSeaEntity->getImages());
@@ -40,6 +42,7 @@ class PeepSeaEntityFactoryTest extends TestCase
     {
         $peepSeaEntity = PeepSeaEntityFactory::buildEntityFromPeepSea(
             new PeepSea(
+                Uuid::uuid4(),
                 'Answer String',
                 new Images([
                     new Image('image1.png'),

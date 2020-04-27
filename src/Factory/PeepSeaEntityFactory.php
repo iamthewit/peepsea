@@ -20,6 +20,7 @@ class PeepSeaEntityFactory
         }
 
         return new PeepSeaEntity(
+            $peepSea->id(),
             $peepSea->answer(),
             $peepSea->images()->toArray(),
             $guesses
@@ -29,12 +30,14 @@ class PeepSeaEntityFactory
     public static function buildEntityFromDatabaseRow(array $row)
     {
         /**
+         * id - string
          * answer - string
          * images - string, comma delimited
          * guesses - string, json ( {[{text: 'Guess Text', guesser: 'Guesser Name'}]} )
          */
 
         return new PeepSeaEntity(
+            $row['id'],
             $row['answer'],
             explode(',', $row['images']),
             json_decode($row['guesses'])

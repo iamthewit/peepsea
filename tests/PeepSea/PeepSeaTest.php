@@ -13,6 +13,7 @@ class PeepSeaTest extends TestCase
     public function testItHasBeenSolved()
     {
         $peepSea = new PeepSea(
+            \Ramsey\Uuid\Uuid::uuid4(),
             'Answer Text',
             new Images([
                 new Image('path/to/image.png'),
@@ -40,6 +41,7 @@ class PeepSeaTest extends TestCase
         );
 
         $peepSea = new PeepSea(
+            \Ramsey\Uuid\Uuid::uuid4(),
             'Answer Text',
             new Images([
                 new Image('path/to/image.png'),
