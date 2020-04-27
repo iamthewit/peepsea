@@ -25,6 +25,8 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
 
         $databaseRow = $statement->fetch();
 
+        // TODO: handle case where we can't find a peepsea by id
+
         return PeepSeaEntityFactory::buildEntityFromDatabaseRow($databaseRow);
     }
 
@@ -58,5 +60,22 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         $statement->execute();
 
         return (bool) $statement->fetch()['count(`id`)'];
+    }
+
+    public function all()
+    {
+        $sql = "SELECT * FROM `peepsea`";
+        $statement = $this->host->prepare($sql);
+        $statement->execute();
+
+        $entityCollection = [];
+        $results = $statement->fetchAll();
+
+        foreach ($results as $result) {
+            $entityCollection[] = PeepSeaEntityFactory::buildEntityFromDatabaseRow($result);
+        }
+
+        return $entityCollection;
+        \Kint::dump($entityCollection);
     }
 }

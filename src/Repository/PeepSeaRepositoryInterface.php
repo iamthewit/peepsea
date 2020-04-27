@@ -11,4 +11,6 @@ interface PeepSeaRepositoryInterface
     public function store(PeepSeaEntity $peepSeaEntity): void;
 
     public function exists(string $id): bool;
+
+    public function all();
 }

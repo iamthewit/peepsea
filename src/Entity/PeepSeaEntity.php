@@ -2,7 +2,7 @@
 
 namespace Entity;
 
-class PeepSeaEntity
+class PeepSeaEntity implements \JsonSerializable
 {
     private string $id;
     private string $answer;
@@ -79,5 +79,15 @@ class PeepSeaEntity
     public function setGuesses(array $guesses): void
     {
         $this->guesses = $guesses;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'answer' => $this->getAnswer(),
+            'images' => $this->getImages(),
+            'guesses' => $this->getGuesses()
+        ];
     }
 }
