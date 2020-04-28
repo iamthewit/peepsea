@@ -1,32 +1,31 @@
 <?php
 
+use Application\API\HomeController;
 use Application\API\PeepSeaController;
 use DI\Bridge\Slim\Bridge;
-use Repository\PeepSeaRepositoryInterface;
-use Repository\SQLPeepSeaRepository;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$config = include __DIR__ . '/../config/config.php';
+require __DIR__ . '/../config/debug.php';
+$container = include __DIR__ . '/../config/container.php';
 
-// TODO: turn kint off in prod environment
-Kint\Renderer\RichRenderer::$theme = 'solarized-dark.css';
-
-$pdo = new PDO($config['database_host']);
-
-// TODO: move container code
-$builder = new DI\ContainerBuilder();
-$builder->addDefinitions([
-   PeepSeaRepositoryInterface::class => new SQLPeepSeaRepository($pdo)
-]);
-$container = $builder->build();
+// Create Application
 $app = Bridge::create($container);
 
-// TODO: move routing code
-$app->get('/', [PeepSeaController::class, 'list']);
-$app->get('/peepsea/{id}', [PeepSeaController::class, 'show']);
-$app->post('/peepsea', [PeepSeaController::class, 'create']);
+/**
+ * ROUTING
+ */
+// HomeController
+$app->get('/', [HomeController::class, 'index']);
 
+// PeepSeaController
+$app->get('/peepsea', [PeepSeaController::class, 'list']);
+$app->post('/peepsea', [PeepSeaController::class, 'create']);
+$app->get('/peepsea/{id}', [PeepSeaController::class, 'show']);
+$app->put('/peepsea/{id}', [PeepSeaController::class, 'update']);
+$app->delete('/peepsea/{id}', [PeepSeaController::class, 'delete']);
+
+// Run the Application
 try {
     $app->run();
 } catch (Exception $e) {

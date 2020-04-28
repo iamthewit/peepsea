@@ -1,5 +1,9 @@
 <?php
 
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../.env');
+$dotenv->load();
+
 return [
-    'database_host' => 'sqlite:/home/ben/Projects/PHP/peepsea/database/peepsea.sqlite3',
+    'database_host' => getenv('DATABASE_HOST'),
+    'kint_enabled' => getenv('KINT_ENABLED'),
 ];
