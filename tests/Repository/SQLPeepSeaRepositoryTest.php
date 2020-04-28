@@ -80,4 +80,12 @@ class SQLPeepSeaRepositoryTest extends TestCase
         $this->assertInstanceOf(PeepSeaEntity::class, $peepSeaEntity);
         $this->assertEquals('123', $peepSeaEntity->getId());
     }
+
+    public function testItReturnsNullWhenNoRowCanBeFound()
+    {
+        $repository  = new SQLPeepSeaRepository($this->pdo);
+        $peepSeaEntity = $repository->findById('123');
+
+        $this->assertNull($peepSeaEntity);
+    }
 }

@@ -10,6 +10,10 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
 {
     private PDO $host;
 
+    /**
+     * SQLPeepSeaRepository constructor.
+     * @param PDO $host
+     */
     public function __construct(PDO $host)
     {
         $this->host = $host;
@@ -17,8 +21,16 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         $this->host->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     }
 
-    public function findById(string $id): PeepSeaEntity
+    /**
+     * @param string $id
+     * @return PeepSeaEntity|null
+     */
+    public function findById(string $id): ?PeepSeaEntity
     {
+        if (!$this->exists($id)) {
+            return null;
+        }
+
         $statement = $this->host->prepare("SELECT * FROM `peepsea` WHERE `id` = :id");
         $statement->bindParam(':id', $id);
         $statement->execute();
@@ -30,6 +42,9 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         return PeepSeaEntityFactory::buildEntityFromDatabaseRow($databaseRow);
     }
 
+    /**
+     * @param PeepSeaEntity $peepSeaEntity
+     */
     public function store(PeepSeaEntity $peepSeaEntity): void
     {
         $sql = "INSERT INTO `peepsea` (`id`, `answer`, `images`, `guesses`) VALUES (:id, :answer, :images, :guesses)";
@@ -62,6 +77,9 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         return (bool) $statement->fetch()['count(`id`)'];
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         $sql = "SELECT * FROM `peepsea`";
@@ -76,6 +94,6 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         }
 
         return $entityCollection;
-        \Kint::dump($entityCollection);
+//        \Kint::dump($entityCollection);
     }
 }
