@@ -2,7 +2,9 @@
 
 namespace Repository;
 
+use Application\Exception\PeepSeaEntityCollectionCreationException;
 use Entity\PeepSeaEntity;
+use Entity\PeepSeaEntityCollection;
 use Factory\PeepSeaEntityFactory;
 use PDO;
 
@@ -78,7 +80,8 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
     }
 
     /**
-     * @return array
+     * @return PeepSeaEntityCollection
+     * @throws PeepSeaEntityCollectionCreationException
      */
     public function all()
     {
@@ -86,14 +89,11 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
         $statement = $this->host->prepare($sql);
         $statement->execute();
 
-        $entityCollection = [];
-        $results = $statement->fetchAll();
-
-        foreach ($results as $result) {
-            $entityCollection[] = PeepSeaEntityFactory::buildEntityFromDatabaseRow($result);
+        $results = [];
+        foreach ($statement->fetchAll() as $result) {
+            $results[] = PeepSeaEntityFactory::buildEntityFromDatabaseRow($result);
         }
 
-        return $entityCollection;
-//        \Kint::dump($entityCollection);
+        return new PeepSeaEntityCollection($results);
     }
 }

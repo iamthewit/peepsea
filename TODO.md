@@ -1,3 +1,4 @@
 TODO:
 - validation in controller
-- EntityCollection
+- Add some integration tests for the API
+- GuessController

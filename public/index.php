@@ -25,6 +25,10 @@ $app->get('/peepsea/{id}', [PeepSeaController::class, 'show']);
 $app->put('/peepsea/{id}', [PeepSeaController::class, 'update']);
 $app->delete('/peepsea/{id}', [PeepSeaController::class, 'delete']);
 
+// TODO:
+// GuessController
+//$app->post('/peepsea/{id}', [GuessController::class, 'create']);
+
 // Run the Application
 try {
     $app->run();

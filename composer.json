@@ -4,6 +4,7 @@
         "psr-4": {
             "Application\\": "src/Application",
             "Entity\\": "src/Entity",
+            "Exception\\": "src/Exception",
             "Factory\\": "src/Factory",
             "PeepSea\\": "src/PeepSea/",
             "Repository\\": "src/Repository"
