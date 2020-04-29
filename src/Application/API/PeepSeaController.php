@@ -2,54 +2,63 @@
 
 namespace Application\API;
 
-use Application\FetchAllPeepSea;
+use Application\PeepSeaService;
+use Exception\PeepSeaDoesNotExistException;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Repository\PeepSeaRepositoryInterface;
 
 class PeepSeaController
 {
-    private PeepSeaRepositoryInterface $repository;
+    private PeepSeaService $peepSeaService;
 
     /**
      * PeepSeaController constructor.
-     * @param PeepSeaRepositoryInterface $repository
+     * @param PeepSeaService $peepSeaService
      */
-    public function __construct(PeepSeaRepositoryInterface $repository)
+    public function __construct(PeepSeaService $peepSeaService)
     {
-        $this->repository = $repository;
+        $this->peepSeaService = $peepSeaService;
     }
 
     public function list(RequestInterface $request)
     {
-        // TODO: refactor all application classes into a PeepSeaService class
-        // and inject into the controller
-        $fetchAllPeepSea = new FetchAllPeepSea($this->repository);
-
         return new Response(
             200,
             ['Content-Type' => 'application/json'],
-            json_encode($fetchAllPeepSea->fetchAll())
+            json_encode($this->peepSeaService->fetchAll())
         );
     }
 
     public function show($id, RequestInterface $request)
     {
-        // TODO: create FindPeepSeaById class
-        $bodyContent = json_encode($this->repository->findById($id));
+        try {
+            $bodyContent = $this->peepSeaService->findById($id);
+        } catch (PeepSeaDoesNotExistException $e) {
+            return new Response(404, [], '404');
+        }
 
         return new Response(
             200,
             ['Content-Type' => 'application/json'],
-            $bodyContent
+            json_encode($bodyContent)
         );
-
     }
 
     public function create(ServerRequestInterface $request)
     {
+        // TODO: validate $request->getParsedBody()
 
+        $peepSea = $this->peepSeaService->create(
+            $request->getParsedBody()['answer'],
+            $request->getParsedBody()['images']
+        );
+
+        return new Response(
+            201,
+            ['Content-Type' => 'application/json'],
+            json_encode($peepSea)
+        );
     }
 
     public function update()

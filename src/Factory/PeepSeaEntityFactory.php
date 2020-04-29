@@ -4,12 +4,19 @@ namespace Factory;
 
 use Entity\PeepSeaEntity;
 use PeepSea\Guess;
+use PeepSea\Image;
 use PeepSea\PeepSea;
 
 class PeepSeaEntityFactory
 {
     public static function buildEntityFromPeepSea(PeepSea $peepSea)
     {
+        $images = [];
+        foreach ($peepSea->images() as $image) {
+            /** @var Image$image */
+            $images[] = $image->path();
+        }
+
         $guesses = [];
         foreach ($peepSea->guesses() as $guess) {
             /** @var Guess $guess */
@@ -22,7 +29,7 @@ class PeepSeaEntityFactory
         return new PeepSeaEntity(
             $peepSea->id(),
             $peepSea->answer(),
-            $peepSea->images()->toArray(),
+            $images,
             $guesses
         );
     }

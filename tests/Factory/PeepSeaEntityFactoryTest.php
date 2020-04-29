@@ -31,11 +31,15 @@ class PeepSeaEntityFactoryTest extends TestCase
         $this->assertInstanceOf(PeepSeaEntity::class, $peepSeaEntity);
         $this->assertEquals('Answer Text', $peepSeaEntity->getAnswer());
         $this->assertEquals(['image1.png', 'image2.png', 'image3.png'], $peepSeaEntity->getImages());
-
-        $guessObject = new stdClass();
-        $guessObject->text = 'Guess Text';
-        $guessObject->guesser = 'Guesser Name';
-        $this->assertEquals([$guessObject], $peepSeaEntity->getGuesses());
+        $this->assertEquals(
+            [
+                [
+                    'text' => 'Guess Text',
+                    'guesser' => 'Guesser Name',
+                ]
+            ],
+            $peepSeaEntity->getGuesses()
+        );
     }
 
     public function testBuildEntityFromPeepSea()

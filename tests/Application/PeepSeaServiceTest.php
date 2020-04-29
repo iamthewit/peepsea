@@ -2,19 +2,27 @@
 
 namespace Test\Application;
 
-use Application\FetchAllPeepSea;
+use Application\PeepSeaService;
 use Entity\PeepSeaEntity;
 use Entity\PeepSeaEntityCollection;
-use PeepSea\Guesses;
-use PeepSea\Images;
 use PeepSea\PeepSea;
 use PeepSea\PeepSeaCollection;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Repository\PeepSeaRepositoryInterface;
 
-class FetchAllPeepSeaTest extends TestCase
+class PeepSeaServiceTest extends TestCase
 {
+    public function testItReturnsAPeepSea()
+    {
+        $repoMock = \Mockery::mock(PeepSeaRepositoryInterface::class);
+        $repoMock->shouldReceive('store');
+
+        $peepSeaService = new PeepSeaService($repoMock);
+        $peepSea = $peepSeaService->create('Answer', []);
+
+        $this->assertInstanceOf(PeepSea::class, $peepSea);
+    }
 
     public function testFetchAll()
     {
@@ -36,8 +44,8 @@ class FetchAllPeepSeaTest extends TestCase
             ])
         );
 
-        $fetchAllPeepSea = new FetchAllPeepSea($repoMock);
-        $peepSeaCollection = $fetchAllPeepSea->fetchAll();
+        $peepSeaService = new PeepSeaService($repoMock);
+        $peepSeaCollection = $peepSeaService->fetchAll();
 
         $this->assertInstanceOf(PeepSeaCollection::class, $peepSeaCollection);
     }
