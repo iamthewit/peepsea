@@ -4,10 +4,12 @@ namespace PeepSea;
 
 use ArrayIterator;
 use Countable;
+use Exception\ImagesCreationException;
 use IteratorAggregate;
+use JsonSerializable;
 use Traversable;
 
-class Images implements IteratorAggregate, Countable
+class Images implements IteratorAggregate, Countable, JsonSerializable
 {
     private array $images;
 
@@ -18,6 +20,8 @@ class Images implements IteratorAggregate, Countable
      */
     public function __construct(array $images)
     {
+        $this->images = [];
+
         foreach ($images as $image) {
             if (!is_a($image, Image::class)) {
                 throw new ImagesCreationException(
@@ -51,5 +55,10 @@ class Images implements IteratorAggregate, Countable
     public function count()
     {
         return count($this->images);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

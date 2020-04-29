@@ -3,9 +3,9 @@
 namespace Application;
 
 use PeepSea\Guesses;
-use PeepSea\GuessesCreationException;
+use Exception\GuessesCreationException;
 use PeepSea\Images;
-use PeepSea\ImagesCreationException;
+use Exception\ImagesCreationException;
 use PeepSea\PeepSea;
 use Factory\PeepSeaEntityFactory;
 use Ramsey\Uuid\Uuid;

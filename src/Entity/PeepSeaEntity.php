@@ -70,6 +70,7 @@ class PeepSeaEntity implements \JsonSerializable
      */
     public function getGuesses(): array
     {
+        // ['guesser' => 'Guesser Name', 'text' => 'Guess Text']
         return $this->guesses;
     }
 

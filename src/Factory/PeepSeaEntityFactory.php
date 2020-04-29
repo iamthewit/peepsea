@@ -40,7 +40,7 @@ class PeepSeaEntityFactory
             $row['id'],
             $row['answer'],
             explode(',', $row['images']),
-            json_decode($row['guesses'])
+            json_decode($row['guesses'], true)
         );
     }
 }

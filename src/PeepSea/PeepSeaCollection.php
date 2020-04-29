@@ -1,27 +1,28 @@
 <?php
 
-namespace Entity;
+namespace PeepSea;
 
 use ArrayIterator;
 use Countable;
-use Exception\PeepSeaEntityCollectionCreationException;
+use Exception\PeepSeaCollectionCreationException;
 use IteratorAggregate;
+use JsonSerializable;
 
-class PeepSeaEntityCollection implements IteratorAggregate, Countable
+class PeepSeaCollection implements IteratorAggregate, Countable, JsonSerializable
 {
     private array $peepSeas;
 
     /**
-     * PeepSeaEntityCollection constructor.
+     * PeepSeaCollection constructor.
      * @param array $peepSeas
-     * @throws PeepSeaEntityCollectionCreationException
+     * @throws PeepSeaCollectionCreationException
      */
     public function __construct(array $peepSeas = [])
     {
         foreach ($peepSeas as $peepSea) {
-            if (!is_a($peepSea, PeepSeaEntity::class)) {
-                throw new PeepSeaEntityCollectionCreationException(
-                    'Can only create a PeepSeaEntityCollection from an array of PeepSeaEntity objects.'
+            if (!is_a($peepSea, PeepSea::class)) {
+                throw new PeepSeaCollectionCreationException(
+                    'Can only create a PeepSeaCollection from an array of PeepSea objects.'
                 );
             }
 
@@ -51,5 +52,10 @@ class PeepSeaEntityCollection implements IteratorAggregate, Countable
     public function count(): int
     {
         return count($this->peepSeas);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

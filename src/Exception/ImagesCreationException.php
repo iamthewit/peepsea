@@ -1,6 +1,6 @@
 <?php
 
-namespace PeepSea;
+namespace Exception;
 
 class ImagesCreationException extends \Exception
 {

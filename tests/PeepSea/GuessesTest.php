@@ -2,7 +2,7 @@
 
 
 use PeepSea\Guesses;
-use PeepSea\GuessesCreationException;
+use Exception\GuessesCreationException;
 use PHPUnit\Framework\TestCase;
 
 class GuessesTest extends TestCase

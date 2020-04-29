@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Entity\PeepSeaEntity;
+use Entity\PeepSeaEntityCollection;
 
 interface PeepSeaRepositoryInterface
 {
@@ -12,5 +13,5 @@ interface PeepSeaRepositoryInterface
 
     public function exists(string $id): bool;
 
-    public function all();
+    public function all(): PeepSeaEntityCollection;
 }

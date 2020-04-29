@@ -2,7 +2,7 @@
 
 
 use PeepSea\Images;
-use PeepSea\ImagesCreationException;
+use Exception\ImagesCreationException;
 use PHPUnit\Framework\TestCase;
 
 class ImagesTest extends TestCase

@@ -4,10 +4,12 @@ namespace PeepSea;
 
 use ArrayIterator;
 use Countable;
+use Exception\GuessesCreationException;
 use IteratorAggregate;
+use JsonSerializable;
 use Traversable;
 
-class Guesses implements IteratorAggregate, Countable
+class Guesses implements IteratorAggregate, Countable, JsonSerializable
 {
     private array $guesses;
 
@@ -18,6 +20,8 @@ class Guesses implements IteratorAggregate, Countable
      */
     public function __construct(array $guesses)
     {
+        $this->guesses = [];
+
         foreach ($guesses as $guess) {
             if (!is_a($guess, Guess::class)) {
                 throw new GuessesCreationException(
@@ -51,5 +55,10 @@ class Guesses implements IteratorAggregate, Countable
     public function count()
     {
         return count($this->guesses);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }

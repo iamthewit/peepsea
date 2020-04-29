@@ -2,7 +2,9 @@
 
 namespace PeepSea;
 
-class Image
+use JsonSerializable;
+
+class Image implements JsonSerializable
 {
     private string $path;
 
@@ -24,4 +26,8 @@ class Image
     }
 
 
+    public function jsonSerialize()
+    {
+        return ['path' => $this->path()];
+    }
 }

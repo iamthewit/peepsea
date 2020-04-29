@@ -2,7 +2,9 @@
 
 namespace PeepSea;
 
-class Guess
+use JsonSerializable;
+
+class Guess implements JsonSerializable
 {
     private Guesser $guesser;
     private string $text;
@@ -32,5 +34,13 @@ class Guess
     public function text()
     {
         return $this->text;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'guesser' => $this->guesser(),
+            'text' => $this->text()
+        ];
     }
 }

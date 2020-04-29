@@ -81,9 +81,9 @@ class SQLPeepSeaRepository implements PeepSeaRepositoryInterface
 
     /**
      * @return PeepSeaEntityCollection
-     * @throws PeepSeaEntityCollectionCreationException
+     * @throws \Exception\PeepSeaEntityCollectionCreationException
      */
-    public function all()
+    public function all(): PeepSeaEntityCollection
     {
         $sql = "SELECT * FROM `peepsea`";
         $statement = $this->host->prepare($sql);

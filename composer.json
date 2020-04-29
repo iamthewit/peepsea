@@ -6,8 +6,9 @@
             "Entity\\": "src/Entity",
             "Exception\\": "src/Exception",
             "Factory\\": "src/Factory",
-            "PeepSea\\": "src/PeepSea/",
-            "Repository\\": "src/Repository"
+            "PeepSea\\": "src/PeepSea",
+            "Repository\\": "src/Repository",
+            "Test\\": "tests"
         }
     },
     "require": {
@@ -23,6 +24,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.1",
-        "kint-php/kint": "^3.3"
+        "kint-php/kint": "^3.3",
+        "mockery/mockery": "^1.3",
+        "psy/psysh": "@stable"
     }
 }

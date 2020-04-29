@@ -2,9 +2,10 @@
 
 namespace PeepSea;
 
+use JsonSerializable;
 use Ramsey\Uuid\UuidInterface;
 
-class PeepSea
+class PeepSea implements JsonSerializable
 {
     private UuidInterface $id;
     private string $answer;
@@ -76,5 +77,15 @@ class PeepSea
     public function hasBeenSolved(): bool
     {
         return (bool) $this->correctGuess();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id(),
+            'answer' => $this->answer(),
+            'images' => $this->images(),
+            'guesses' => $this->guesses(),
+        ];
     }
 }

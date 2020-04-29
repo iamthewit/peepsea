@@ -2,16 +2,10 @@
 
 namespace Application\API;
 
-use Factory\PeepSeaEntityFactory;
+use Application\FetchAllPeepSea;
 use GuzzleHttp\Psr7\Response;
-use PeepSea\Guesses;
-use PeepSea\Image;
-use PeepSea\Images;
-use PeepSea\PeepSea;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid\Uuid;
 use Repository\PeepSeaRepositoryInterface;
 
 class PeepSeaController
@@ -29,17 +23,20 @@ class PeepSeaController
 
     public function list(RequestInterface $request)
     {
-        $bodyContent = json_encode($this->repository->all());
+        // TODO: refactor all application classes into a PeepSeaService class
+        // and inject into the controller
+        $fetchAllPeepSea = new FetchAllPeepSea($this->repository);
 
         return new Response(
             200,
             ['Content-Type' => 'application/json'],
-            $bodyContent
+            json_encode($fetchAllPeepSea->fetchAll())
         );
     }
 
     public function show($id, RequestInterface $request)
     {
+        // TODO: create FindPeepSeaById class
         $bodyContent = json_encode($this->repository->findById($id));
 
         return new Response(
