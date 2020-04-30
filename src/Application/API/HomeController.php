@@ -3,11 +3,11 @@
 namespace Application\API;
 
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class HomeController
 {
-    public function index(RequestInterface $request)
+    public function index(ServerRequestInterface $request)
     {
         $bodyContent = json_encode([
             'message' => 'PeepSea'

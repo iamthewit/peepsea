@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Application;
-
 
 use Exception\GuessesCreationException;
 use Exception\ImagesCreationException;
@@ -10,6 +8,8 @@ use Exception\PeepSeaDoesNotExistException;
 use Factory\PeepSeaCollectionFactory;
 use Factory\PeepSeaEntityFactory;
 use Factory\PeepSeaFactory;
+use PeepSea\Guess;
+use PeepSea\Guesser;
 use PeepSea\Guesses;
 use PeepSea\Image;
 use PeepSea\Images;
@@ -81,7 +81,42 @@ class PeepSeaService
         return PeepSeaFactory::buildFromPeepSeaEntity($peepSeaEntity);
     }
 
-    private function createArrayOfImages(array $imagePaths)
+    /**
+     * @param string $id
+     * @param string $text
+     * @param string $guesserName
+     * @return Guess
+     * @throws GuessesCreationException
+     * @throws PeepSeaDoesNotExistException
+     */
+    public function guess(string $id, string $text, string $guesserName): Guess
+    {
+        $peepSea = $this->findById($id);
+        $guess = new Guess(new Guesser($guesserName), $text);
+        $guesses = new Guesses(array_merge($peepSea->guesses()->toArray(), [$guess]));
+
+        // TODO: update PeepSeaFactory with buildPeepSeaFromPeepSea
+        // method can take a number of arguments to replace
+        // existing PeepSea properties
+        $peepSeaWithNewGuess = new PeepSea(
+            $peepSea->id(),
+            $peepSea->answer(),
+            $peepSea->images(),
+            $guesses
+        );
+
+        $peepSeaEntity = PeepSeaEntityFactory::buildEntityFromPeepSea($peepSeaWithNewGuess);
+        $this->peepSeaRepository->store($peepSeaEntity);
+
+        return $guess;
+    }
+
+    /**
+     * @param array $imagePaths
+     * @return Images
+     * @throws ImagesCreationException
+     */
+    private function createArrayOfImages(array $imagePaths): Images
     {
         $images = [];
         foreach ($imagePaths as $imagePath) {

@@ -6,6 +6,7 @@ use Application\PeepSeaService;
 use Exception\PeepSeaDoesNotExistException;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PeepSeaController
@@ -21,7 +22,7 @@ class PeepSeaController
         $this->peepSeaService = $peepSeaService;
     }
 
-    public function list(RequestInterface $request)
+    public function list(ServerRequestInterface $request)
     {
         return new Response(
             200,
@@ -30,7 +31,7 @@ class PeepSeaController
         );
     }
 
-    public function show($id, RequestInterface $request)
+    public function show($id, ServerRequestInterface $request)
     {
         try {
             $bodyContent = $this->peepSeaService->findById($id);

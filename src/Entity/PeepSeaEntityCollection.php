@@ -18,6 +18,8 @@ class PeepSeaEntityCollection implements IteratorAggregate, Countable
      */
     public function __construct(array $peepSeas = [])
     {
+        $this->peepSeas = [];
+
         foreach ($peepSeas as $peepSea) {
             if (!is_a($peepSea, PeepSeaEntity::class)) {
                 throw new PeepSeaEntityCollectionCreationException(

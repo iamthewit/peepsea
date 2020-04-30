@@ -1,5 +1,6 @@
 <?php
 
+use Application\API\GuessController;
 use Application\API\HomeController;
 use Application\API\PeepSeaController;
 use DI\Bridge\Slim\Bridge;
@@ -27,7 +28,7 @@ $app->delete('/peepsea/{id}', [PeepSeaController::class, 'delete']);
 
 // TODO:
 // GuessController
-//$app->post('/peepsea/{id}', [GuessController::class, 'create']);
+$app->post('/peepsea/{id}/guess', [GuessController::class, 'create']);
 
 // Run the Application
 try {

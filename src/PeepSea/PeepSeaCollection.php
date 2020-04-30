@@ -19,6 +19,7 @@ class PeepSeaCollection implements IteratorAggregate, Countable, JsonSerializabl
      */
     public function __construct(array $peepSeas = [])
     {
+        $this->peepSeas = [];
         foreach ($peepSeas as $peepSea) {
             if (!is_a($peepSea, PeepSea::class)) {
                 throw new PeepSeaCollectionCreationException(
